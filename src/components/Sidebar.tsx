@@ -1,19 +1,43 @@
-import React, { useState, useEffect } from 'react'
-import { Stack, Box, Typography } from '@mui/material'
+import React, { FC } from 'react'
+import { Stack } from '@mui/material'
+
 import { categories } from '../utils/constants'
 
-const SideBar = () => {
-  return (
-    <Stack
-      direction='row'
-      sx={{ overflowY: 'auto', height: { sx: 'auto', md: '95%' }, flexDirection: 'column' }}
-    >
-      {categories.map((category, index) => (
-        <React.Fragment key={index}>
-          <span>{category.name}</span>
-        </React.Fragment>
-      ))}
-    </Stack>
-  )
+type CategoriesTYpe = {
+  selectedCategory: string
+  setSelectedCategory: (name: string) => void
 }
-export default SideBar
+const Categories: FC<CategoriesTYpe> = ({ selectedCategory, setSelectedCategory }) => (
+  <Stack
+    direction='row'
+    sx={{
+      overflowY: 'auto',
+      height: { sx: 'auto', md: '95%' },
+      flexDirection: { md: 'column' },
+    }}
+  >
+    {categories.map((category) => (
+      <button
+        className='category-btn'
+        onClick={() => setSelectedCategory(category.name)}
+        style={{
+          // background: category.name === selectedCategory && '#FC1503',
+          color: 'white',
+        }}
+        key={category.name}
+      >
+        <span
+          style={{
+            color: category.name === selectedCategory ? 'white' : 'red',
+            marginRight: '15px',
+          }}
+        ></span>
+        <span style={{ opacity: category.name === selectedCategory ? '1' : '0.8' }}>
+          {category.name}
+        </span>
+      </button>
+    ))}
+  </Stack>
+)
+
+export default Categories
